@@ -46,6 +46,15 @@
         width: 122px;
       }
     </style>
+
+    <script src="https://cdn.trackjs.com/agent/v3/latest/t.js"></script>
+    <script>
+      window.TrackJS &&
+        TrackJS.install({
+          token: "f45d29d040da422fb7447be100bd6826",
+          application: "lab-9-cse-110",
+        });
+    </script>
   </head>
 
   <body>
@@ -93,6 +102,11 @@
           this.name = "MissingInputError";
         }
       }
+
+      window.onerror = (message, source, lineno, colno, error) => {
+        console.log("Global error caught:", message);
+        return true;
+      };
       let form = document.querySelector("form");
       form.addEventListener("submit", (e) => {
         e.preventDefault();
@@ -193,6 +207,9 @@
             console.trace("Console Trace Demo");
           }
           outer();
+        },
+        globalError() {
+          throw new Error("Triggered a global error!");
         },
       };
 
