@@ -90,11 +90,30 @@
       let form = document.querySelector("form");
       form.addEventListener("submit", (e) => {
         e.preventDefault();
-        let output = document.querySelector("output");
-        let firstNum = document.querySelector("#first-num").value;
-        let secondNum = document.querySelector("#second-num").value;
-        let operator = document.querySelector("#operator").value;
-        output.innerHTML = eval(`${firstNum} ${operator} ${secondNum}`);
+        try {
+          let output = document.querySelector("output");
+
+          if (!output) {
+            throw new Error("Output element missing");
+          }
+
+          let firstNum = document.querySelector("#first-num").value;
+          let secondNum = document.querySelector("#second-num").value;
+          let operator = document.querySelector("#operator").value;
+
+          if (firstNum == "" || secondNum == "") {
+            throw new Error("Enter two numbers");
+          }
+
+          output.innerHTML = eval(`${firstNum} ${operator} ${secondNum}`);
+        } catch (err) {
+          console.error(`${err.name}: ${err.message}`);
+          if (output) {
+            output.innerHTML = `Error: ${err.message}`;
+          }
+        } finally {
+          console.log("Finished");
+        }
       });
 
       let errorBtns = Array.from(
