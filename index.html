@@ -87,6 +87,12 @@
     </main>
 
     <script>
+      class MissingInputError extends Error {
+        constructor(message) {
+          super(message);
+          this.name = "MissingInputError";
+        }
+      }
       let form = document.querySelector("form");
       form.addEventListener("submit", (e) => {
         e.preventDefault();
@@ -102,7 +108,7 @@
           let operator = document.querySelector("#operator").value;
 
           if (firstNum == "" || secondNum == "") {
-            throw new Error("Enter two numbers");
+            throw new MissingInputError("Enter two numbers");
           }
 
           output.innerHTML = eval(`${firstNum} ${operator} ${secondNum}`);
